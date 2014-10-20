@@ -14,7 +14,7 @@ hubble_h = 0.7
 ngrid = 306
 boxsize = 47.0
 
-option = 2  # To use lgalaxy+semi_rt
+option = 2  
 execfile = "./ionz_main"
 
 densdir="/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/"
@@ -31,8 +31,15 @@ zlistfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z3.txt"
 z2listfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt"
 
 
+os.system("mkdir -p "+logbase)
+os.system("mkdir -p "+inputbase)
+os.system("mkdir -p "+sumdir)
+os.system("mkdir -p "+pbsdir)
+os.system("mkdir -p "+srcdirbase)
+os.system("mkdir -p "+samdirbase)
+os.system("mkdir -p "+outputdirbase)
+
 def submit_job(nion):
-    os.system("mkdir -p "+pbsdir)
     pbsfile=pbsdir+"%4.2f.pbs"%(nion)
     nion_list = "nion.list"
     f = open("nion.list","w+")
@@ -60,6 +67,8 @@ def submit_job(nion):
     os.system("mkdir -p "+outputdir)
     srcdir = srcdirbase+"%4.2f"%(nion)
     os.system("mkdir -p "+srcdir)
+    samdir = samdirbase+"%4.2f"%(nion)
+    os.system("mkdir -p "+samdir)
 
     logfile = logbase+"%4.2f"%(nion) # 
     summaryfile = sumdir+"%4.2f"%(nion)+".sum" #
