@@ -5,8 +5,8 @@ os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2
 
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
 global execfile, option
-global dendir,srcdir,outputdir,zlistfile,z2listfile
-global logbase
+global dendir,srcdirbase,logbase,sumdir,inputbase,samdirbase,outputdirbase,zlistfile,z2listfile
+global pbsdir
 omegam = 0.27
 omegab = 0.045
 omegal = 0.73
@@ -18,18 +18,29 @@ option = 2  # To use lgalaxy+semi_rt
 execfile = "./ionz_main"
 
 densdir="/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/"
-srcdir="/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/sources/"
-outputdir = "./withoutprevxfrac/"
+
+srcdirbase="srcs/"
+samdirbase="sams/"
+outputdirbase = "xfrac/"
+logbase="logs/"
+inputbase = "inputs/"
+sumdir="summary/"
+pbsdir="pbs/"
+
 zlistfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z3.txt"
 z2listfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt"
-logbase="logs/log_"
 
 
 def submit_job(nion):
-    pbsfile="runall.pbs"
+    pbsfile=pbsdir+"%4.2f.pbs"%(nion)
+    nion_list = "nion.list"
+    f = open("nion.list","w+")
+    print >> f, "1"
+    print >> f, nion
+    f.close()
     f = open(pbsfile,"w+")
     print >> f, '#!/bin/bash'
-    print >> f, '#$ -N custom'
+    print >> f, '#$ -N LGALAXY_RT'
     print >> f, '#$ -cwd' 
     print >> f, '#$ -pe openmpi 128' 
     print >> f, '#$ -q mps.q@@mps_amd'
@@ -44,17 +55,14 @@ def submit_job(nion):
 
     print >> f, 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib' 
     
-
-    # parameters
-    option = 1
-    execfile = "./ionz_main"
-    nion_list = "nion.list"
-
-    
-    logfile = "withoutprevxfrac.log"
-
-
+    outputdir = outputdirbase+"%4.2f"%(nion)
     os.system("mkdir -p "+outputdir)
+    srcdir = srcdirbase+"%4.2f"%(nion)
+    os.system("mkdir -p "+srcdir)
+
+    logfile = logbase+"%4.2f"%(nion) # 
+    summaryfile = sumdir+"%4.2f"%(nion)+".summary" #
+
     zf = open(zlistfile,"r")
     z3list = zf.readlines()
     zf.close;
@@ -77,7 +85,10 @@ def submit_job(nion):
         denfile = densdir+"/"+z3+"n_all.dat"
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
-        print >> f, 'mpirun -np $NSLOTS numactl -l',execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,">>",logfile
+        print >> f, 'mpirun -np $NSLOTS numactl -l',execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile ">>",logfile
         
-    print >> f, "echo SEQUENCE COMPLETED >>",logfile
+    print >> f, "echo 'SEQUENCE COMPLETED' >>",logfile
     f.close
+
+
+submit_job(40000.)
