@@ -18,8 +18,9 @@ lgal_template = open(template,"r").read()
 
 
 #create sources things
+global gensource
 
-
+gensource_exec = "/mnt/lustre/scratch/cs390/codes/Sources_generate/gensourc"
 #ionz things
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
 global ionz_execfile, option
@@ -137,6 +138,9 @@ def submit_job(nion):
         print >> f, "echo -e \"1\\n"+z2+"\" > ",zout_file
         print >> f, "# run lgalaxy"
         print >> f, 'mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input
+        print >> f, '# run gensourc for current snapshot'
+        print >> f, gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile
+        print >> f, '# run ionz'
         print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
         
     print >> f, "echo 'SEQUENCE COMPLETED' >>",logfile
