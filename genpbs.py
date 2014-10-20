@@ -32,6 +32,7 @@ z2listfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt"
 
 
 def submit_job(nion):
+    os.system("mkdir -p "+pbsdir)
     pbsfile=pbsdir+"%4.2f.pbs"%(nion)
     nion_list = "nion.list"
     f = open("nion.list","w+")
