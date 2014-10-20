@@ -4,9 +4,10 @@ import os
 os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib')
 
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
-global execfile, option
+global ionz_execfile, option
 global dendir,srcdirbase,logbase,sumdir,inputbase,samdirbase,outputdirbase,zlistfile,z2listfile
 global pbsdir
+
 omegam = 0.27
 omegab = 0.045
 omegal = 0.73
@@ -14,8 +15,8 @@ hubble_h = 0.7
 ngrid = 306
 boxsize = 47.0
 
-option = 2  # To use lgalaxy+semi_rt
-execfile = "./ionz_main"
+option = 2  
+ionz_execfile = "./ionz_main"
 
 densdir="/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/"
 
@@ -31,8 +32,16 @@ zlistfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z3.txt"
 z2listfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt"
 
 
+os.system("mkdir -p "+logbase)
+os.system("mkdir -p "+inputbase)
+os.system("mkdir -p "+sumdir)
+os.system("mkdir -p "+pbsdir)
+os.system("mkdir -p "+srcdirbase)
+os.system("mkdir -p "+samdirbase)
+os.system("mkdir -p "+outputdirbase)
+
 def submit_job(nion):
-    os.system("mkdir -p "+pbsdir)
+    # pre
     pbsfile=pbsdir+"%4.2f.pbs"%(nion)
     nion_list = "nion.list"
     f = open("nion.list","w+")
@@ -60,6 +69,8 @@ def submit_job(nion):
     os.system("mkdir -p "+outputdir)
     srcdir = srcdirbase+"%4.2f"%(nion)
     os.system("mkdir -p "+srcdir)
+    samdir = samdirbase+"%4.2f"%(nion)
+    os.system("mkdir -p "+samdir)
 
     logfile = logbase+"%4.2f"%(nion) # 
     summaryfile = sumdir+"%4.2f"%(nion)+".sum" #
@@ -74,6 +85,7 @@ def submit_job(nion):
 
     if len(z3list) != len(z2list):
         print "Error: z2 != z2"
+        exit()
 
     print >> f, "echo >",logfile
     for i in range(len(z3list)):
@@ -86,7 +98,7 @@ def submit_job(nion):
         denfile = densdir+"/"+z3+"n_all.dat"
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
-        print >> f, 'mpirun -np $NSLOTS numactl -l',execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
+        print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
         
     print >> f, "echo 'SEQUENCE COMPLETED' >>",logfile
     f.close
