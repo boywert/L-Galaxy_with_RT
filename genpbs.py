@@ -92,6 +92,7 @@ def submit_job(nion):
     samdir = samdirbase+"%4.2f"%(nion)
     os.system("mkdir -p "+samdir)
     
+    zout_file = samdirbase+"z_list"
     logfile = logbase+"%4.2f"%(nion) # 
     summaryfile = sumdir+"%4.2f"%(nion)+".sum" #
     lgal_input = inputbase+"lgal_%4.2f"%(nion)
@@ -105,6 +106,7 @@ def submit_job(nion):
     print >> lgalinp, "Reionization_z0  8.0"
     print >> lgalinp, "Reionization_zr  7.0"
     print >> lgalinp, "XfracDir", outputdir
+    print >> lgalinp, "FileWithOutputRedshifts", zout_file 
     print >> lgalinp, "MaxMemSize" ,maxmemsize
     print >> lgalinp, lgal_template
     lgalinp.close()
@@ -132,6 +134,7 @@ def submit_job(nion):
         denfile = densdir+"/"+z3+"n_all.dat"
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
+        print >> f, "echo -e \"1\\n"+z2+"\""
         print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
         
     print >> f, "echo 'SEQUENCE COMPLETED' >>",logfile
