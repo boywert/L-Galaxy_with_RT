@@ -85,7 +85,7 @@ def submit_job(nion):
         denfile = densdir+"/"+z3+"n_all.dat"
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
-        print >> f, 'mpirun -np $NSLOTS numactl -l',execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile ">>",logfile
+        print >> f, 'mpirun -np $NSLOTS numactl -l',execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
         
     print >> f, "echo 'SEQUENCE COMPLETED' >>",logfile
     f.close
