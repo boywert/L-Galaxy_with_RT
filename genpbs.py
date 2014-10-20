@@ -12,7 +12,7 @@ lastfile = 127
 SimulationDir = "/mnt/lustre/scratch/cs390/47Mpc/"
 maxmemsize = 4000
 template = "/mnt/lustre/scratch/cs390/47Mpc/couple/model_001/input_47mpc_template.par"
-
+zout_list = "zout_lgal"
 
 lgal_template = open(template,"r").read()
 
@@ -134,7 +134,9 @@ def submit_job(nion):
         denfile = densdir+"/"+z3+"n_all.dat"
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
-        print >> f, "echo -e \"1\\n"+z2+"\""
+        print >> f, "echo -e \"1\\n"+z2+"\" > ",zout_file
+        print >> f, "# run lgalaxy"
+        print >> f, 'mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input
         print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
         
     print >> f, "echo 'SEQUENCE COMPLETED' >>",logfile
