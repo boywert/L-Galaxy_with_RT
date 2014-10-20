@@ -1,6 +1,8 @@
 import numpy
 import os
 
+os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib')
+
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
 global execfile, option
 global dendir,srcdir,outputdir,zlistfile,z2listfile
@@ -42,7 +44,6 @@ def submit_job(nion):
 
     print >> f, 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib' 
     
-    os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib')
 
     # parameters
     option = 1
