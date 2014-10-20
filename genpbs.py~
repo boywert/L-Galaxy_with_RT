@@ -3,24 +3,6 @@ import os
 
 os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib')
 
-#lgalaxy things
-global firstfile,lastfile,SimulationDir, maxmemsize, lgal_template
-global lgal_exec
-lgal_exec = "/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/L-Galaxies"
-firstfile = 0
-lastfile = 127
-SimulationDir = "/mnt/lustre/scratch/cs390/47Mpc/"
-maxmemsize = 4000
-template = "/mnt/lustre/scratch/cs390/47Mpc/couple/model_001/input_47mpc_template.par"
-
-
-lgal_template = open(template,"r").read()
-
-
-#create sources things
-
-
-#ionz things
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
 global ionz_execfile, option
 global dendir,srcdirbase,logbase,sumdir,inputbase,samdirbase,outputdirbase,zlistfile,z2listfile
@@ -34,7 +16,7 @@ ngrid = 306
 boxsize = 47.0
 
 option = 2  
-ionz_execfile = "/mnt/lustre/scratch/cs390/codes/ionz_codes/ionz_main"
+ionz_execfile = "./ionz_main"
 
 densdir="/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/"
 
@@ -59,7 +41,7 @@ os.system("mkdir -p "+samdirbase)
 os.system("mkdir -p "+outputdirbase)
 
 def submit_job(nion):
-    # prepare PBS file
+    # pre
     pbsfile=pbsdir+"%4.2f.pbs"%(nion)
     nion_list = "nion.list"
     f = open("nion.list","w+")
@@ -83,31 +65,15 @@ def submit_job(nion):
 
     print >> f, 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib' 
     
-    # prepare folder/files
     outputdir = outputdirbase+"%4.2f"%(nion)
     os.system("mkdir -p "+outputdir)
     srcdir = srcdirbase+"%4.2f"%(nion)
     os.system("mkdir -p "+srcdir)
-    
     samdir = samdirbase+"%4.2f"%(nion)
     os.system("mkdir -p "+samdir)
-    
+
     logfile = logbase+"%4.2f"%(nion) # 
     summaryfile = sumdir+"%4.2f"%(nion)+".sum" #
-    lgal_input = inputbase+"lgal_%4.2f"%(nion)
-    # prepare input file for L-galaxy
-    lgalinp = open(lgal_input,"w")
-    print >> lgalinp, "FirstFile",firstfile
-    print >> lgalinp, "LastFile", lastfile
-    print >> lgalinp, "OutputDir", samdir
-    print >> lgalinp, "SimulationDir", SimulationDir
-    print >> lgalinp, "ReionizationOn  5"
-    print >> lgalinp, "Reionization_z0  8.0"
-    print >> lgalinp, "Reionization_zr  7.0"
-    print >> lgalinp, "XfracDir", outputdir
-    print >> lgalinp, "MaxMemSize" ,maxmemsize
-    print >> lgalinp, lgal_template
-    lgalinp.close()
 
     zf = open(zlistfile,"r")
     z3list = zf.readlines()
