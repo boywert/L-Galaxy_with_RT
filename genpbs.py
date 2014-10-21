@@ -96,6 +96,7 @@ def submit_job(nion):
     zout_file = samdirbase+"z_list"
     logfile = logbase+"%4.2f"%(nion)+".ionz" # 
     lgal_log = logbase+"%4.2f"%(nion)+".lgal" # 
+    convert_log = logbase+"%4.2f"%(nion)+".convert" # 
     summaryfile = sumdir+"%4.2f"%(nion)+".sum" #
     lgal_input = inputbase+"lgal_%4.2f"%(nion)
     # prepare input file for L-galaxy
@@ -125,6 +126,7 @@ def submit_job(nion):
         print "Error: z2 != z2"
         exit()
     os.system("rm -f "+lgal_log)
+    os.system("rm -f "+convert_log)
     print >> f, "echo >",logfile
     for i in range(len(z3list)):
         z2 = z2list[i].strip()
@@ -140,7 +142,7 @@ def submit_job(nion):
         print >> f, "# run lgalaxy"
         print >> f, 'mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input,">>",lgal_log
         print >> f, '# run gensourc for current snapshot'
-        print >> f, gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile 
+        print >> f, gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile,">>", convert_log 
         print >> f, '# run ionz'
         print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
         
