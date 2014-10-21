@@ -20,7 +20,7 @@ lgal_template = open(template,"r").read()
 #create sources things
 global gensource
 
-gensource_exec = "/mnt/lustre/scratch/cs390/codes/Sources_generate/gensourc"
+gensource_exec = "/mnt/lustre/scratch/cs390/codes/Sources_generate/gensource"
 #ionz things
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
 global ionz_execfile, option
