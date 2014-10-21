@@ -135,7 +135,7 @@ def submit_job(nion):
         denfile = densdir+"/"+z3+"n_all.dat"
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
-        print >> f, "echo '",z2,"'  > ",ZOUT_FILE
+        print >> f, "echo \"", z2 ,"\"  > ",zout_list
         PRINT >> F, "# RUN LGALAXY"
         PRINT >> F, 'MPIRUN -NP $NSLOTS NUMACTL -L',LGAL_EXEC,LGAL_INPUT
         PRINT >> F, '# RUN GENSOURC FOR CURRENT SNAPSHOT'
