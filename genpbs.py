@@ -124,7 +124,7 @@ def submit_job(nion):
     if len(z3list) != len(z2list):
         print "Error: z2 != z2"
         exit()
-
+    os.system("rm -f "+lgal_log)
     print >> f, "echo >",logfile
     for i in range(len(z3list)):
         z2 = z2list[i].strip()
