@@ -125,10 +125,10 @@ def submit_job(nion):
     if len(z3list) != len(z2list):
         print "Error: z2 != z2"
         exit()
-    os.system("rm -f "+lgal_log)
-    os.system("rm -f "+convert_log)
-    os.system("rm -f "+logfile)
-    print >> f, "echo >",logfile
+    print >> f, "rm -f "+lgal_log
+    print >> f, "rm -f "+convert_log
+    print >> f, "rm -f "+logfile
+
     for i in range(len(z3list)):
         z2 = z2list[i].strip()
         z3 = z3list[i].strip()
@@ -147,7 +147,7 @@ def submit_job(nion):
         print >> f, '# run ionz'
         print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
         
-    print >> f, "echo 'SEQUENCE COMPLETED' >>",logfile
+    print >> f, "echo '#SEQUENCE COMPLETED' >>",summaryfile
     f.close
 
 
