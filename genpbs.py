@@ -138,7 +138,7 @@ def submit_job(nion):
         print >> f, "echo 'z = "+z3+"'"
         print >> f, "echo '",z2,"' > ",zout_file
         print >> f, "# run lgalaxy"
-        print >> f, 'mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input
+        print >> f, 'mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input,">>",lgal_log
         print >> f, '# run gensourc for current snapshot'
         print >> f, gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile 
         print >> f, '# run ionz'
