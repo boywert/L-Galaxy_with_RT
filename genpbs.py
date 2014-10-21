@@ -135,11 +135,11 @@ def submit_job(nion):
         denfile = densdir+"/"+z3+"n_all.dat"
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
-        print >> f, "echo -e \"1\\n"+z2+"\" > ",zout_file
-        print >> f, "# run lgalaxy"
-        print >> f, 'mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input
-        print >> f, '# run gensourc for current snapshot'
-        print >> f, gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile
+        print >> f, "echo '",z2,"'  > ",ZOUT_FILE
+        PRINT >> F, "# RUN LGALAXY"
+        PRINT >> F, 'MPIRUN -NP $NSLOTS NUMACTL -L',LGAL_EXEC,LGAL_INPUT
+        PRINT >> F, '# RUN GENSOURC FOR CURRENT SNAPSHOT'
+        PRINT >> F, gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile
         print >> f, '# run ionz'
         print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
         
