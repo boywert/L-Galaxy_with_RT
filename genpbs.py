@@ -127,6 +127,7 @@ def submit_job(nion):
         exit()
     os.system("rm -f "+lgal_log)
     os.system("rm -f "+convert_log)
+    os.system("rm -f "+logfile)
     print >> f, "echo >",logfile
     for i in range(len(z3list)):
         z2 = z2list[i].strip()
