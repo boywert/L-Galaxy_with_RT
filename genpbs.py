@@ -133,12 +133,12 @@ def submit_job(nion):
             prev_z = "-1"
         else:
             prev_z = z3list[i-1].strip()
-            denfile = densdir+"/"+z3+"n_all.dat"
-            srcfile = srcdir+"/"+z2+".dat"
-            print >> f, "echo 'z = "+z3+"'"
-            print >> f, "echo '",z2,"' > ",zout_file
-            print >> f, "# run lgalaxy"
-            print >> f, 'mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input,">>",lgal_log
+        denfile = densdir+"/"+z3+"n_all.dat"
+        srcfile = srcdir+"/"+z2+".dat"
+        print >> f, "echo 'z = "+z3+"'"
+        print >> f, "echo '",z2,"' > ",zout_file
+        print >> f, "# run lgalaxy"
+        print >> f, 'mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input,">>",lgal_log
         print >> f, '# run gensourc for current snapshot'
         print >> f, gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile 
         print >> f, '# run ionz'
