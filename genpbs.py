@@ -1,5 +1,6 @@
 import numpy
 import os
+import re
 
 os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib')
 
@@ -62,6 +63,8 @@ os.system("mkdir -p "+outputdirbase)
 def submit_job(nion):
     # prepare PBS file
     pbsfile=pbsdir+"%4.2f.pbs"%(nion)
+    summaryfile = sumdir+"%4.2f"%(nion)+".sum" #
+    
     nion_list = "nion.list"
     f = open("nion.list","w+")
     print >> f, "1"
@@ -97,7 +100,6 @@ def submit_job(nion):
     logfile = logbase+"%4.2f"%(nion)+".ionz" # 
     lgal_log = logbase+"%4.2f"%(nion)+".lgal" # 
     convert_log = logbase+"%4.2f"%(nion)+".convert" # 
-    summaryfile = sumdir+"%4.2f"%(nion)+".sum" #
     lgal_input = inputbase+"lgal_%4.2f"%(nion)
     # prepare input file for L-galaxy
     lgalinp = open(lgal_input,"w")
@@ -145,10 +147,10 @@ def submit_job(nion):
         print >> f, '# run gensourc for current snapshot'
         print >> f, gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile,">>", convert_log 
         print >> f, '# run ionz'
-        print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdir,summaryfile, ">>",logfile
+        print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdirbase,summaryfile, ">>",logfile
         
     print >> f, "echo '#SEQUENCE COMPLETED' >>",summaryfile
     f.close
 
 
-submit_job(40000.)
+submit_job(20000.)
