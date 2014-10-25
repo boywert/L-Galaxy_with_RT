@@ -143,11 +143,11 @@ def submit_job(nion):
         print >> f, "echo 'z = "+z3+"'"
         print >> f, "echo '",z2,"' > ",zout_file
         print >> f, "# run lgalaxy"
-        print >> f, 'mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input,">>",lgal_log
+        print >> f, 'time mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input,">>",lgal_log
         print >> f, '# run gensourc for current snapshot'
-        print >> f, gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile,">>", convert_log 
+        print >> f, 'time',gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile,">>", convert_log 
         print >> f, '# run ionz'
-        print >> f, 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdirbase,summaryfile, ">>",logfile
+        print >> f, 'rime mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdirbase,summaryfile, ">>",logfile
         
     print >> f, "echo '#SEQUENCE COMPLETED' >>",summaryfile
     f.close
