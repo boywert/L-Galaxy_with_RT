@@ -2,6 +2,7 @@ import numpy
 import os
 import re
 
+this_dir = os.getcwd()
 os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib')
 
 #lgalaxy things
@@ -16,12 +17,18 @@ template = "/mnt/lustre/scratch/cs390/47Mpc/couple/model_001/input_47mpc_templat
 zout_list = "zout_lgal"
 
 lgal_template = open(template,"r").read()
-
+lgal_struct = "/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/awk/L-Galaxies.h"
 
 #create sources things
 global gensource
+gensource_dir = "source_generate/"
+os.system("cd "+gensource_dir)
+os.system("make clean")
+os.system("cp "+lgal_struct+" ./")  
+os.system("make")
+os.system("cd "+this_dir)
 
-gensource_exec = "/mnt/lustre/scratch/cs390/codes/Sources_generate/gensource"
+gensource_exec = gensource_dir+"/gensource"
 #ionz things
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
 global ionz_execfile, option
@@ -75,9 +82,10 @@ def submit_job(nion):
     print >> f, '#$ -N LGALAXY_RT'
     print >> f, '#$ -cwd' 
     print >> f, '#$ -pe openmpi 128' 
-    print >> f, '#$ -q mps.q@@mps_amd'
+    print >> f, '#$ -q mps.q@@compute_amd_c6145_mps'
     print >> f, '#$ -S /bin/bash'
-    
+    print >> f, "#$ -j y"
+    print >> f, "#$ -o logs/%4.2f.log"%(nion)
     # source modules environment:
     print >> f, "" 
     print >> f, 'module add sge' 
