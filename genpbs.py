@@ -142,7 +142,7 @@ def submit_job(nion):
             prev_z = "-1"
         else:
             prev_z = z3list[i-1].strip()
-        denfile = densdir+"/"+z3+"n_all.dat"
+        denfile = densdir+"/"+z3+"ntot_all.dat"
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
         print >> f, "echo '",z2,"' > ",zout_file
