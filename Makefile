@@ -1,5 +1,5 @@
 This_dir=$(CURDIR)
-gensrc_dir=“sources_generate”
+gensrc_dir=sources_generate
 
 all: sourcegen
 
