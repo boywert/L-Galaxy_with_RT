@@ -24,7 +24,7 @@ global gensource
 gensource_dir = "sources_generate/"
 print "cp "+lgal_struct+" "+gensource_dir
 os.system("cp "+lgal_struct+" "+gensource_dir)
-gensource_exec = gensource_dir+"/gensource"
+gensource_exec = gensource_dir+"/gen_source"
 #ionz things
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
 global ionz_execfile, option
