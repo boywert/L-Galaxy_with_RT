@@ -21,7 +21,7 @@ lgal_struct = "/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/awk/
 
 #create sources things
 global gensource
-gensource_dir = "source_generate/"
+gensource_dir = "sources_generate/"
 print "cp "+lgal_struct+" "+gensource_dir
 os.system("cp "+lgal_struct+" "+gensource_dir)
 gensource_exec = gensource_dir+"/gensource"
