@@ -22,8 +22,7 @@ lgal_struct = "/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/awk/
 #create sources things
 global gensource
 gensource_dir = "source_generate/"
-os.system("ls "+lgal_struct+" "+gensource_dir)
-exit()
+os.system("cp "+lgal_struct+" "+gensource_dir)
 gensource_exec = gensource_dir+"/gensource"
 #ionz things
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
