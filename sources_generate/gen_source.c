@@ -78,7 +78,7 @@ int main(int argc, char **argv)
       Sfr = calloc(grid*grid*grid,sizeof(double));
       for (i=firstfile;i<=lastfile;i++) {
 	sprintf(filename, "%s%s_%d",basename,zlist_string[j],i);
-	// printf("Reading %s\n",filename);
+	printf("Reading %s\n",filename);
 	fp = fopen(filename,"rb");
 	fread(&nTrees, sizeof(int), 1, fp);
 	fread(&nGals, sizeof(int),1, fp);
