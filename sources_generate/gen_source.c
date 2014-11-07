@@ -78,10 +78,10 @@ int main(int argc, char **argv)
       Sfr = calloc(grid*grid*grid,sizeof(double));
       for (i=firstfile;i<=lastfile;i++) {
 	sprintf(filename, "%s%s_%d",basename,zlist_string[j],i);
-	printf("Reading %s\n",filename);
+	if(i == firstfile || i == lastfile)
+	  printf("Reading %s\n.....\n",filename);
 	fp = fopen(filename,"rb");
-	fread(&nTrees, sizeof(int), 1, fp);	
-	printf("ntree =%d\n",nTrees);
+	fread(&nTrees, sizeof(int), 1, fp);
 	fread(&nGals, sizeof(int),1, fp);
 	lgal = malloc(sizeof(struct LGalaxy)*nGals);
 	fseek(fp, nTrees*sizeof(int), SEEK_CUR); // skip nGalsperTree
