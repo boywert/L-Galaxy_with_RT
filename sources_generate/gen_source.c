@@ -93,6 +93,7 @@ int main(int argc, char **argv)
 	fclose(fp);
       }
       sprintf(outputname,"%s/%s.dat",outputfolder,zlist_string[j]);
+      printf("output to file: %s\n",outputname);
       fp = fopen(outputname,"wb+");
       fwrite(&grid,sizeof(int),1,fp);
       fwrite(&grid,sizeof(int),1,fp);
