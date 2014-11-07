@@ -84,6 +84,7 @@ int main(int argc, char **argv)
 	fread(&nGals, sizeof(int),1, fp);
 	lgal = malloc(sizeof(struct LGalaxy)*nGals);
 	fseek(fp, nTrees*sizeof(int), SEEK_CUR); // skip nGalsperTree
+	printf("ngal = %d\n",nGals);
 	fread(lgal,sizeof(struct LGalaxy),nGals,fp);
 	for(k=0;k<nGals;k++) {
 	  cell = (int)(lgal[k].Pos[0]/gridsize) + (int)(lgal[k].Pos[1]/gridsize)*grid + (int)(lgal[k].Pos[2]/gridsize)*grid*grid;
