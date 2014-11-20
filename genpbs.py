@@ -8,7 +8,11 @@ os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2
 #lgalaxy things
 global firstfile,lastfile,SimulationDir, maxmemsize, lgal_template
 global lgal_exec
-lgal_exec = "/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/L-Galaxies"
+global lgal_folder
+
+lgal_folder = "/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/"
+lgal_exec = lgal_folder+"L-Galaxies"
+
 firstfile = 0
 lastfile = 127
 SimulationDir = "/mnt/lustre/scratch/cs390/47Mpc/"
@@ -38,7 +42,7 @@ hubble_h = 0.7
 ngrid = 306
 boxsize = 47.0
 
-option = 2  
+option = 1  
 ionz_execfile = "/mnt/lustre/scratch/cs390/codes/ionz_codes/ionz_main"
 
 densdir="/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/"
@@ -66,8 +70,7 @@ os.system("mkdir -p "+outputdirbase)
 def submit_job(nion):
     # prepare PBS file
     pbsfile=pbsdir+"%4.2f.pbs"%(nion)
-    summaryfile = sumdir+"%4.2f"%(nion)+".sum" #
-    
+    summaryfile = sumdir+"%4.2f"%(nion)+".sum" 
     nion_list = "nion.list"
     f = open("nion.list","w+")
     print >> f, "1"
@@ -99,7 +102,7 @@ def submit_job(nion):
     
     samdir = samdirbase+"%4.2f"%(nion)
     os.system("mkdir -p "+samdir)
-    
+    os.system("cp "+lgal_folder+"/python/LGalaxyStruct.py "+samdir)
     zout_file = samdirbase+"z_list"
     logfile = logbase+"%4.2f"%(nion)+".ionz" # 
     lgal_log = logbase+"%4.2f"%(nion)+".lgal" # 
@@ -137,6 +140,8 @@ def submit_job(nion):
 
     for i in range(len(z3list)):
         z2 = z2list[i].strip()
+        if(i < len(z3list)-1):
+            z2_next = z2list[i].strip()
         z3 = z3list[i].strip()
         if i == 0:
             prev_z = "-1"
@@ -146,6 +151,10 @@ def submit_job(nion):
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
         print >> f, "echo '",z2,"' > ",zout_file
+        if(i < len(z3list)-1):
+            print >> f, "echo '",z2_next,"' >> ",zout_file
+        else:
+            print >> f, "echo 30.00 >> ",zout_file
         print >> f, "# run lgalaxy"
         print >> f, 'echo','mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input
         print >> f, 'time mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input,">>",lgal_log
