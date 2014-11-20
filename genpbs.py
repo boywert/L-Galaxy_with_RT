@@ -141,7 +141,7 @@ def submit_job(nion):
     for i in range(len(z3list)):
         z2 = z2list[i].strip()
         if(i < len(z3list)-1):
-            z2_next = z2list[i].strip()
+            z2_next = z2list[i+1].strip()
         z3 = z3list[i].strip()
         if i == 0:
             prev_z = "-1"
