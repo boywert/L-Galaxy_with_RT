@@ -18,7 +18,7 @@ lastfile = 127
 SimulationDir = "/mnt/lustre/scratch/cs390/47Mpc/"
 maxmemsize = 4000
 template = "/mnt/lustre/scratch/cs390/47Mpc/couple/model_001/input_47mpc_template.par"
-zout_list = "zout_lgal"
+
 
 lgal_template = open(template,"r").read()
 lgal_struct = "/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/awk/L-Galaxies.h"
