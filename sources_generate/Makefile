@@ -1,6 +1,6 @@
 all: gen_source
 
-gensource: gensource.c
+gen_source: gen_source.c
 	gcc -g gen_source.c -o gensource
 clean:
-	rm -f gensource
+	rm -f gen_source

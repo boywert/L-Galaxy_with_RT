@@ -44,11 +44,16 @@ int main(int argc, char **argv)
   double rho_crit_0;
   double gridmass_c; //to convert msun to gridmass
    
-  if(argc == 5) {
+  if(argc == 6) {
     sscanf(argv[1],"%d",&selected_snap);
     sscanf(argv[2],"%s",basename);
     sscanf(argv[3],"%s",outputfolder);
     sscanf(argv[4],"%s",zlistfile);
+    sscanf(argv[5],"%d",grid);
+  }
+  else {
+    printf("./gen_source <snap> <basename> <output> <zlist> <ngrid>\nExit\n");
+    exit(1);
   }
   printf("argc = %d , argv[0] = %s, argv[1] = %s\n",argc,argv[0],argv[1]);
   sprintf(buff,"mkdir -p %s",outputfolder);
