@@ -1,6 +1,7 @@
 import numpy
 import os
 import re
+import config
 
 this_dir = os.getcwd()
 os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib')
@@ -10,22 +11,22 @@ global firstfile,lastfile,SimulationDir, maxmemsize, lgal_template
 global lgal_exec
 global lgal_folder
 
-lgal_folder = "/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/"
-lgal_exec = lgal_folder+"L-Galaxies"
+lgal_folder = config.lgal_config
+lgal_exec = lgal_folder+"/L-Galaxies"
 
-firstfile = 0
-lastfile = 127
-SimulationDir = "/mnt/lustre/scratch/cs390/47Mpc/"
-maxmemsize = 4000
-template = "/mnt/lustre/scratch/cs390/47Mpc/couple/model_001/input_47mpc_template.par"
+firstfile = config.firstfile
+lastfile = config.lastfile
+SimulationDir = config.SimulationDir
+maxmemsize = config.maxmemsize
+template = config.template
 
 
 lgal_template = open(template,"r").read()
-lgal_struct = "/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/awk/L-Galaxies.h"
+lgal_struct = config.lgal_struct
 
 #create sources things
 global gensource
-gensource_dir = "sources_generate/"
+gensource_dir = config.gensource_dir
 print "cp "+lgal_struct+" "+gensource_dir
 os.system("cp "+lgal_struct+" "+gensource_dir)
 gensource_exec = gensource_dir+"/gen_source"
@@ -35,28 +36,28 @@ global ionz_execfile, option
 global dendir,srcdirbase,logbase,sumdir,inputbase,samdirbase,outputdirbase,zlistfile,z2listfile
 global pbsdir
 
-omegam = 0.27
-omegab = 0.045
-omegal = 0.73
-hubble_h = 0.7
-ngrid = 306
-boxsize = 47.0
+omegam = config.omegam
+omegab = config.omegab
+omegal = config.omegal
+hubble_h = config.hubble_h
+ngrid = config.ngrid
+boxsize = config.boxsize
 
-option = 1  
-ionz_execfile = "/mnt/lustre/scratch/cs390/codes/ionz_codes/ionz_main"
+option = config.option
+ionz_execfile = config.ionz_execfile
 
-densdir="/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/"
+densdir=config.dendir
 
-srcdirbase="srcs/"
-samdirbase="sams/"
-outputdirbase = "xfrac/"
-logbase="logs/"
-inputbase = "inputs/"
-sumdir="summary/"
-pbsdir="pbs/"
+srcdirbase=config.srcdirbase
+samdirbase=config.samdirbase
+outputdirbase = config.outputdirbase
+logbase=config.logbase
+inputbase = config.inputbase
+sumdir=config.sumdir
+pbsdir=config.pbs
 
-zlistfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z3.txt"
-z2listfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt"
+zlistfile=config.zlistfile
+z2listfile=config.z2listfile
 
 
 os.system("mkdir -p "+logbase)
@@ -159,8 +160,8 @@ def submit_job(nion):
         print >> f, 'echo','mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input
         print >> f, 'time mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input,">>",lgal_log
         print >> f, '# run gensourc for current snapshot'
-        print >> f, 'echo',gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile
-        print >> f, 'time',gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile,">>", convert_log 
+        print >> f, 'echo',gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile,ngrid
+        print >> f, 'time',gensource_exec,i,samdir+"/SA_z",srcdir,z2listfile,ngrid,">>", convert_log 
         print >> f, '# run ionz'
         print >> f, "echo ", 'mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdirbase,summaryfile
         print >> f, 'time mpirun -np $NSLOTS numactl -l',ionz_execfile,option,nion_list,omegam,omegab,omegal,hubble_h,ngrid,boxsize,denfile,srcfile,z3,prev_z,outputdirbase,summaryfile, ">>",logfile
