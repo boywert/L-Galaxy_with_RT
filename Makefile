@@ -1,4 +1,4 @@
-all: genbps
+all: genpbs
 
 genpbs: genpbs.py config.py
 	python genpbs.py
