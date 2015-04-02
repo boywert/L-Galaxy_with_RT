@@ -11,7 +11,7 @@ global firstfile,lastfile,SimulationDir, maxmemsize, lgal_template
 global lgal_exec
 global lgal_folder
 
-lgal_folder = config.lgal_config
+lgal_folder = config.lgal_folder
 lgal_exec = lgal_folder+"/L-Galaxies"
 
 firstfile = config.firstfile
