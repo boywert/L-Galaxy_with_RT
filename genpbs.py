@@ -46,7 +46,7 @@ boxsize = config.boxsize
 option = config.option
 ionz_execfile = config.ionz_execfile
 
-densdir=config.dendir
+densdir=config.densdir
 
 srcdirbase=config.srcdirbase
 samdirbase=config.samdirbase
