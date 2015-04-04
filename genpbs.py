@@ -54,7 +54,7 @@ outputdirbase = config.outputdirbase
 logbase=config.logbase
 inputbase = config.inputbase
 sumdir=config.sumdir
-pbsdir=config.pbs
+pbsdir=config.pbsdir
 
 zlistfile=config.zlistfile
 z2listfile=config.z2listfile
