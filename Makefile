@@ -4,7 +4,7 @@ genpbs: genpbs.py config.py
 	python genpbs.py
 ionz:
 	cd ionz_codes
-	make
+	$(MAKE) clean && $(MAKE)
 	cd ..
 clean:
 	rm -f *~ log/* pbs/* 
