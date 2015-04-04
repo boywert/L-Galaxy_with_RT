@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
 
 
   int use_prev_xfrac = 0;
-
+  int subgrid_only = 0;
 
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
@@ -142,8 +142,18 @@ int main(int argc, char **argv) {
   vomegam = input_param.omegam;
   vomegalam = input_param.omegalam;
   vomegab = input_param.omegab;
-  if(input_param.option == 2)
+
+  if(input_param.option == 1)
+    ;
+  else if(input_param.option == 2)
     use_prev_xfrac = 1;
+  else if(input_param.option == 3)
+    subgrid_only = 1;
+  else {
+    if(mympi.ThisTask == 0)
+      printf("[Error]: option %d  not recognised.\nExit.\n",input_param.option);
+    exit(1);
+  }
   sprintf(densfilename,"%s",input_param.densityfile);
   sprintf(sourcefilename,"%s",input_param.sourcesfile);
   sprintf(z_out,"%s",input_param.cur_z);
@@ -285,6 +295,22 @@ int main(int argc, char **argv) {
   t_stop = Get_Current_time();
   if(mympi.ThisTask == 0)
     printf("Finish subgrid semi-numerical reionization: %lf s\n",t_stop-t_start);
+  
+#ifdef PARALLEL
+  MPI_Barrier(MPI_COMM_WORLD);
+#endif
+  
+  if(subgrid_only == 1) {
+    if(mympi.ThisTask == 0) {
+      buffer = malloc(sizeof(float)*Nnion*N1*N2*N3);
+      pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
+      for(ii=0;ii<Nnion;ii++)
+	free_fftw_real_3d(nxion[ii],N1,N2,N3+2);
+      free(nxion);
+      write_xfrac(outputdir, z_out, buffer, nh, robar,nion, Nnion, N1, N2, N3);  
+    }
+    exit(0);
+  }
   if(mympi.ThisTask == 0)
     printf("Start semi-numerical reionization process\n");
 
@@ -362,7 +388,9 @@ int main(int argc, char **argv) {
     write_xfrac(outputdir, z_out, buffer, nh, nion, robar, Nnion, N1, N2, N3);
 #endif
   }
+#ifdef PARALLEL
   MPI_Finalize();
+#endif
   return 0;
 } /* END OF MAIN */
 
