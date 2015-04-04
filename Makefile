@@ -18,4 +18,7 @@ gen_source: sam
 	cd $(gen_source_code) && $(MAKE) clean && $(MAKE)
 	cd ..
 clean:
-	rm -f *~ log/* pbs/* 
+	rm -f *~ log/* pbs/*
+	cd $(gen_source_code) && $(MAKE) clean && cd ..
+	cd $(reionization_code) && $(MAKE) clean && cd ..
+	cd $(sam_code) && $(MAKE) clean && cd ..
