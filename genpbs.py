@@ -54,6 +54,7 @@ inputbase = config.inputbase
 sumdir=config.sumdir
 pbsdir=config.pbsdir
 
+alistfile = config.alistfile
 zlistfile=config.zlistfile
 z2listfile=config.z2listfile
 
@@ -111,7 +112,7 @@ def submit_job(nion):
     lgalinp = open(lgal_input,"w")
     print >> lgalinp, "FirstFile",firstfile
     print >> lgalinp, "LastFile", lastfile
-    print >> lgalinp, "FileWithZList", zout_file
+    print >> lgalinp, "FileWithZList", alistfile
     print >> lgalinp, "OutputDir", samdir
     print >> lgalinp, "SimulationDir", SimulationDir
     print >> lgalinp, "ReionizationOn  5"

@@ -27,5 +27,6 @@ inputbase = "inputs/"
 sumdir="summary/"
 pbsdir="pbs/"
 
+alistfile="/mnt/lustre/scratch/cs390/47Mpc/snap.txt"
 zlistfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z3.txt"
 z2listfile="/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt"
