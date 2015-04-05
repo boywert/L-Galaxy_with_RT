@@ -117,6 +117,7 @@ def submit_job(nion):
     print >> lgalinp, "Reionization_z0  8.0"
     print >> lgalinp, "Reionization_zr  7.0"
     print >> lgalinp, "XfracDir", outputdir
+    print >> lgalinp, "XfracNGrids", ngrid
     print >> lgalinp, "FileWithOutputRedshifts", zout_file 
     print >> lgalinp, "MaxMemSize" ,maxmemsize
     print >> lgalinp, lgal_template
