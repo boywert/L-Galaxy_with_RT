@@ -103,7 +103,7 @@ def submit_job(nion):
     samdir = samdirbase+"%4.2f"%(nion)
     os.system("mkdir -p "+samdir)
     os.system("cp "+lgal_folder+"/python/LGalaxyStruct.py "+samdir)
-    zout_file = samdirbase+"z_list"
+    zout_file = this_dir+"/"+samdirbase+"z_list"
     logfile = logbase+"%4.2f"%(nion)+".ionz" # 
     lgal_log = logbase+"%4.2f"%(nion)+".lgal" # 
     convert_log = logbase+"%4.2f"%(nion)+".convert" # 
@@ -121,7 +121,7 @@ def submit_job(nion):
     print >> lgalinp, "XfracDir", outputdir
     print >> lgalinp, "XfracNGrids", ngrid
     print >> lgalinp, "FileWithOutputRedshifts", zout_file
-    print >> lgalinp, "FileWithZList_OriginalCosm", zout_file
+    print >> lgalinp, "FileWithZList_OriginalCosm", alistfile
     print >> lgalinp, "MaxMemSize" ,maxmemsize
     print >> lgalinp, lgal_template
     lgalinp.close()
