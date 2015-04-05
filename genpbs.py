@@ -155,6 +155,7 @@ def submit_job(nion):
             print >> f, "echo '",z2_next,"' >> ",zout_file
         else:
             print >> f, "echo 30.00 >> ",zout_file
+        print >> f, "cat ",zout_file
         print >> f, "# run lgalaxy"
         print >> f, 'echo','mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input
         print >> f, 'time mpirun -np $NSLOTS numactl -l',lgal_exec,lgal_input,">>",lgal_log
