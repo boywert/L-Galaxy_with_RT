@@ -27,8 +27,6 @@ lgal_struct = config.lgal_struct
 #create sources things
 global gensource
 gensource_dir = config.gensource_dir
-print "cp "+lgal_struct+" "+gensource_dir
-os.system("cp "+lgal_struct+" "+gensource_dir)
 gensource_exec = gensource_dir+"/gen_source"
 #ionz things
 global omegam, omegab, omegal, hubble_h, ngrid, boxsize
