@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     sscanf(argv[2],"%s",basename);
     sscanf(argv[3],"%s",outputfolder);
     sscanf(argv[4],"%s",zlistfile);
-    sscanf(argv[5],"%d",grid);
+    sscanf(argv[5],"%d",&grid);
   }
   else {
     printf("./gen_source <snap> <basename> <output> <zlist> <ngrid>\nExit\n");
