@@ -19,7 +19,7 @@ lastfile = config.lastfile
 SimulationDir = config.SimulationDir
 maxmemsize = config.maxmemsize
 template = config.template
-
+reionization_option = config.reionization_option
 
 lgal_template = open(template,"r").read()
 lgal_struct = config.lgal_struct
@@ -115,7 +115,7 @@ def submit_job(nion):
     print >> lgalinp, "FileWithZList", alistfile
     print >> lgalinp, "OutputDir", samdir
     print >> lgalinp, "SimulationDir", SimulationDir
-    print >> lgalinp, "ReionizationOn  5"
+    print >> lgalinp, "ReionizationOn", reionization_option
     print >> lgalinp, "Reionization_z0  8.0"
     print >> lgalinp, "Reionization_zr  7.0"
     print >> lgalinp, "XfracDir", outputdir

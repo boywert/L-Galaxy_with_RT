@@ -13,6 +13,7 @@ omegal = 0.73
 hubble_h = 0.7
 ngrid = 306
 boxsize = 47.0
+reionization_option = 5
 
 option = 1  
 ionz_execfile = "./ionz_codes/ionz_main"
