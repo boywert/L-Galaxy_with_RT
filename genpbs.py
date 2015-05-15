@@ -153,9 +153,9 @@ def submit_job(nion):
         denfile = densdir+"/"+z3+"ntot_all.dat"
         srcfile = srcdir+"/"+z2+".dat"
         print >> f, "echo 'z = "+z3+"'"
-        print >> f, "echo '",z2,"' > ",zout_file
+        print >> f, "echo '"+z2+"' > ",zout_file
         if(i < len(z3list)-1):
-            print >> f, "echo '",z2_next,"' >> ",zout_file
+            print >> f, "echo '"+z2_next+"' >> ",zout_file
         else:
             print >> f, "echo 30.00 >> ",zout_file
         print >> f, "cat ",zout_file
