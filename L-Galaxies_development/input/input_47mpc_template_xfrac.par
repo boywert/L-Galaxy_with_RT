@@ -13,7 +13,7 @@ SpecPhotIMF           Chabrier ; Salpeter ; Kroupa
 CoolFunctionsDir      /home/cpes/astr/petert/research/SAM/CoolFunctions/
 
 FileWithFilterNames	/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/input/Filter_uv.txt
-McFile		/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/input/input/Mc.txt
+McFile		/mnt/lustre/scratch/cs390/codes/47Mpc/L-Galaxies_development/input/Mc.txt
 LastDarkMatterSnapShot  75
 
 
