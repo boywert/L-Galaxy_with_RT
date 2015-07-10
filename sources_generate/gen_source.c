@@ -8,7 +8,8 @@ int main(int argc, char **argv)
 {
   struct LGalaxy *lgal;
   float write_buff;
-  FILE *fp;
+  FILE *fp,*sp;
+  float *sfr_float;
   double *Sfr;
   int cubep3m_p = 1728;
   float boxsize = 47.0;
@@ -81,6 +82,17 @@ int main(int argc, char **argv)
     if(j == selected_snap) {
       printf("Converting snapshot : %d\n",selected_snap);
       Sfr = calloc(grid*grid*grid,sizeof(double));
+      // read the previous snapshot to make cumulative
+      if(j > 0) {
+	sprintf(outputname,"%s/%s.dat",outputfolder,zlist_string[j-1]);
+	sfr_float = malloc(grid*grid*grid*sizeof(float));
+	sp = fopen(outputname,"rb");
+	fread(sfr_float,sizeof(float),grid*grid*grid,sp);
+	for(k=0;k<grid*grid*grid;k++)
+	  Sfr[k] += (double)sfr_float[k];
+	fclose(sp);
+	free(sfr_float);
+      }
       for (i=firstfile;i<=lastfile;i++) {
 	sprintf(filename, "%s%s_%d",basename,zlist_string[j],i);
 	if(i == firstfile || i == lastfile)
