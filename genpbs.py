@@ -173,4 +173,4 @@ def submit_job(nion):
     f.close
 
 
-submit_job(520.)
+submit_job(480.)
