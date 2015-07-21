@@ -345,10 +345,14 @@ struct GALAXY_OUTPUT
 #endif
 #endif
 #ifndef NO_PROPS_OUTPUTS
-#ifdef GALAXYTREE
+#ifdef GALAXYTREE 
   long long GalID; /** ID of galaxy, unique within simulation and SAM run.*/
   long long HaloID; // Unique ID of MPA halo containing this galaxy
+#else
+#ifdef OUTPUT_HALOIDS
+  long long HaloID;
 #endif
+#endif // GALAXYTREE
 #ifdef MBPID
   long long MostBoundID; // Most bound particle at centre of subhalo last associated with this galaxy.  Put here as want all 8-byte blocks together at top of output record.
 #endif

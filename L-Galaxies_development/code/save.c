@@ -189,7 +189,9 @@ void prepare_galaxy_for_output(int n, struct GALAXY *g, struct GALAXY_OUTPUT *o)
 
   o->MMSubID = calc_big_db_subid_index(g->SnapNum, Halo[tmpfirst].FileNr, Halo[tmpfirst].SubhaloIndex);
 #endif
-
+#ifdef OUTPUT_HALOIDS
+  o->HaloID = HaloIDs[g->HaloNr].HaloID;
+#endif
   o->LookBackTimeToSnap = NumToTime(g->SnapNum)*UnitTime_in_years/Hubble_h;
   o->InfallVmax = g->InfallVmax;
   o->InfallSnap = g->InfallSnap;
