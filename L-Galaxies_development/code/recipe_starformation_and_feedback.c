@@ -74,11 +74,10 @@ void starformation(int p, int centralgal, double time, double dt, int nstep)
   		strdot = SfrEfficiency * (Gal[p].ColdGas - cold_crit) / tdyn * pow(Gal[p].Vvir / SfrLawPivotVelocity, SfrLawSlope);
   	else
   		strdot = 0.0;
-	// printf("Gal_M200_crit = %g, cold_crit = %g\n",(float)Gal[p].HaloM_Crit200, (float)cold_crit);
   }
 
   //No threshold
-  if(StarFormationRecipe == 1)
+  else if(StarFormationRecipe == 1)
   {
   	if(Gal[p].ColdGas > 1.e-3)
   		strdot = SfrEfficiency * (Gal[p].ColdGas - 1.e-3) / tdyn * pow(Gal[p].Vvir / SfrLawPivotVelocity, SfrLawSlope);
@@ -90,6 +89,10 @@ void starformation(int p, int centralgal, double time, double dt, int nstep)
 
 	  			else
 					strdot = 0.0;*/
+  }
+  //cold_crit = 0
+  else if(StarFormationRecipe == 2) {
+    strdot = SfrEfficiency * Gal[p].ColdGas / tdyn * pow(Gal[p].Vvir / SfrLawPivotVelocity, SfrLawSlope);
   }
 
 #ifdef H2_AND_RINGS
