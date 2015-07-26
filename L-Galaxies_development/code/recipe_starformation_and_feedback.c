@@ -93,6 +93,8 @@ void starformation(int p, int centralgal, double time, double dt, int nstep)
   //cold_crit = 0
   else if(StarFormationRecipe == 2) {
     strdot = SfrEfficiency * Gal[p].ColdGas / tdyn * pow(Gal[p].Vvir / SfrLawPivotVelocity, SfrLawSlope);
+    if(strdot < 0.)
+      strdot = 0.;
   }
 
 #ifdef H2_AND_RINGS

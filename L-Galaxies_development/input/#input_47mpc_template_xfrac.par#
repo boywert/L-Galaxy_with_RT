@@ -63,7 +63,7 @@ Hashbits    8        ; needed for Peano hilb1ert key with the GALAXYTREE option
 StarFormationRecipe             0   ;Star Formation recipe
 				                      %*0 -- Croton2006, Delucia2007, Guo2011 
 				                      % 1 -- No dependence on tdyn
-						      % 2 -- No threshold
+						      % 2 -- No threshold  
 				                 
 FeedbackRecipe                  0   ; 
                                       %*0 -- Guo 2010 (moderate Delucia 2004 ejection scheme
