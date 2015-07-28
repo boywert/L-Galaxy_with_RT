@@ -567,8 +567,6 @@ struct GALAXY_OUTPUT
   float NPhotReion;
 #endif
 
-#ifdef HALOID
-#endif
 #if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
   float Xfrac3d;
 #endif
