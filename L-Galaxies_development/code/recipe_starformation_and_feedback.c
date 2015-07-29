@@ -732,6 +732,7 @@ void SN_feedback(int p, int centralgal, double stars, double starsr[], char feed
 			   reheated_mass = Gal[p].ColdGas;
 			   printf("reheated_mass =%g, coldgass = %g\n,line %d",reheated_mass,Gal[p].ColdGas,__LINE__);
 			 }
+			 printf("reheated_mass =%g, coldgass = %g,line %d\n",reheated_mass,Gal[p].ColdGas,__LINE__);
 		 }// end if feedback_location
 
 #else //H2_AND_RINGS
@@ -870,7 +871,7 @@ void update_from_feedback(int p, int centralgal, double reheated_mass, double ej
   		//REHEAT
   		// if galaxy is a type 1 or a type 2 orbiting a type 1 with hot gas being striped,
   		//some of the reheated and ejected masses goes to the type 0 and some stays in the type 1
-	  printf("reheated_mass =%g, coldgass = %g\n,line %d",reheated_mass,Gal[p].ColdGas,__LINE__);
+	  printf("reheated_mass =%g, coldgass = %g,line %d\n",reheated_mass,Gal[p].ColdGas,__LINE__);
 #ifdef H2_AND_RINGS
   		for(j=0;j<RNUM;j++)
   		{
