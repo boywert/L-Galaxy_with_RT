@@ -728,11 +728,10 @@ void SN_feedback(int p, int centralgal, double stars, double starsr[], char feed
 			 }
 
 
-			 if(reheated_mass > Gal[p].ColdGas){
+			 if(reheated_mass > Gal[p].ColdGas)
 			   reheated_mass = Gal[p].ColdGas;
-			   printf("reheated_mass =%g, coldgass = %g\n,line %d",reheated_mass,Gal[p].ColdGas,__LINE__);
-			 }
-			 printf("reheated_mass =%g, coldgass = %g,line %d\n",reheated_mass,Gal[p].ColdGas,__LINE__);
+		
+		
 		 }// end if feedback_location
 
 #else //H2_AND_RINGS
@@ -886,7 +885,7 @@ void update_from_feedback(int p, int centralgal, double reheated_mass, double ej
   		if(Gal[p].Type ==0)
   		{
 #ifndef H2_AND_RINGS
-		  printf("reheated_mass =%g, coldgass = %g, fraction = %g, line %d\n",reheated_mass,Gal[p].ColdGas,reheated_mass/Gal[p].ColdGas,__LINE__);
+		  
 		  transfer_gas(p,"Hot",p,"Cold",(float)(reheated_mass/Gal[p].ColdGas),"update_from_feedback", __LINE__);
 #else
   			//transfer_cold_gas(p,"Hot",p,"Cold",((float)reheated_mass)/Gal[p].ColdGas);
