@@ -886,7 +886,7 @@ void update_from_feedback(int p, int centralgal, double reheated_mass, double ej
   		if(Gal[p].Type ==0)
   		{
 #ifndef H2_AND_RINGS
-		  	  printf("reheated_mass =%g, coldgass = %g, fraction = %g, line %d\n",reheated_mass,Gal[p].reheated_mass/ColdGas,Gal[p].ColdGas__LINE__);
+		  printf("reheated_mass =%g, coldgass = %g, fraction = %g, line %d\n",reheated_mass,Gal[p].reheated_mass/ColdGas,Gal[p].ColdGas,__LINE__);
   			transfer_gas(p,"Hot",p,"Cold",((float)reheated_mass)/Gal[p].ColdGas,"update_from_feedback", __LINE__);
 #else
   			//transfer_cold_gas(p,"Hot",p,"Cold",((float)reheated_mass)/Gal[p].ColdGas);
