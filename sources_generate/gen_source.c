@@ -3,9 +3,9 @@
 #include <math.h>
 #include "L-Galaxies.h"
 
-float cal_H(float z, float H0, float Om)
+float cal_H(float z, float H0, float Om) {
   return H0*sqrt(Om*(1.+z)*(1.+z)*(1.+z) + (1.-Om));
-
+}
 double delta_t(float z_max, float z_min,float Om, float H0, float h) {
   int i,n = 100000;
   double dt,dz,F1,F2,z1,z2;
