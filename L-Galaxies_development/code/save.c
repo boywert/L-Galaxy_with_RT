@@ -15,7 +15,7 @@
  *        There are two distinct procedures to write the output depending
  *        on whether GALAXY_TREE option is turned on or off. If it is on
  *        the full galaxy tree is written using save_galaxy_tree. If it
- *        is off, the output is only written for the chosen output snap
+ *        is off, the output is only writtปen for the chosen output snap
  *        numbers using save_galaxies.
  *
  *        If USE_MEMORY_TO_MINIMIZE_IO ON, these routines copy the galaxy

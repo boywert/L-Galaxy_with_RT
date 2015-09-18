@@ -262,7 +262,6 @@ void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1,
   FILE *inp;
   int ii;
   int n1,n2,n3;
-  float dt = 11.6e6;
   
   if((inp=fopen(filename,"rb")) == NULL) {
     debug_checkpoint();
@@ -282,7 +281,6 @@ void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1,
   fread(buffer_3d,sizeof(float),n1*n2*n3,inp);
   fclose(inp);
   for(ii=0;ii<n1*n2*n3;ii++) {
-    buffer_3d[ii] *= dt;
     *robarhalo_p += buffer_3d[ii];
   }
   *robarhalo_p /= (1.*(n1)*(n2)*(n3));

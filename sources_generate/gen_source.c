@@ -3,6 +3,23 @@
 #include <math.h>
 #include "L-Galaxies.h"
 
+float cal_H(float z, float H0, float Om)
+  return H0*sqrt(Om*(1.+z)*(1.+z)*(1.+z) + (1.-Om));
+
+double delta_t(float z_max, float z_min,float Om, float H0, float h) {
+  int i,n = 100000;
+  double dt,dz,F1,F2,z1,z2;
+  dt = 0.;
+  dz = (z_max - z_min)/n;
+  for(i=0;i<n;i++) {
+    z1 = z_min + dz*i;
+    z2 = z1+dz;
+    F1 = 1./(1.+z1)/cal_H(z1,H0,Om);
+    F2 = 1./(1.+z2)/cal_H(z2,H0,Om);
+    dt += 0.5*(F1+F2)*dz;
+  }
+  return dt;
+}
 
 int main(int argc, char **argv)
 {
@@ -36,6 +53,7 @@ int main(int argc, char **argv)
   float m2Mpc = 1./Mpc2m;
   const float Msun2kg = 1.98855e30;
   float kg2Msun = 1./Msun2kg;
+  const float year2sec = 3600.*24*365.25; 
   const float m2km = 0.001;
   const float omegam = 0.27;
   float G = 6.674e-11;   // SI
@@ -44,7 +62,7 @@ int main(int argc, char **argv)
   float pi = 4.0*atan(1.0);
   double rho_crit_0;
   double gridmass_c; //to convert msun to gridmass
-   
+  double dt,z1,z2;
   if(argc == 6) {
     sscanf(argv[1],"%d",&selected_snap);
     sscanf(argv[2],"%s",basename);
@@ -82,17 +100,25 @@ int main(int argc, char **argv)
     if(j == selected_snap) {
       printf("Converting snapshot : %d\n",selected_snap);
       Sfr = calloc(grid*grid*grid,sizeof(double));
-      // read the previous snapshot to make cumulative
       if(j > 0) {
-	sprintf(outputname,"%s/%s.dat",outputfolder,zlist_string[j-1]);
-	sfr_float = malloc(grid*grid*grid*sizeof(float));
-	sp = fopen(outputname,"rb");
-	fread(sfr_float,sizeof(float),grid*grid*grid,sp);
-	for(k=0;k<grid*grid*grid;k++)
-	  Sfr[k] += (double)sfr_float[k];
-	fclose(sp);
-	free(sfr_float);
-      }
+	sscanf(zlist_string[j],"%lg",&z1);
+	sscanf(zlist_string[j-1],"%lg",&z2);
+	dt = delta_t((float)z2,(float)z1,(float)omegam, H0, h);
+      } else
+	dt = 0.;
+      dt *= (Mpc2m/h/1000.)/year2sec;
+	// km/s / (Mpc/h)
+      // read the previous snapshot to make cumulative
+      /* if(j > 0) { */
+      /* 	sprintf(outputname,"%s/%s.dat",outputfolder,zlist_string[j-1]); */
+      /* 	sfr_float = malloc(grid*grid*grid*sizeof(float)); */
+      /* 	sp = fopen(outputname,"rb"); */
+      /* 	fread(sfr_float,sizeof(float),grid*grid*grid,sp); */
+      /* 	for(k=0;k<grid*grid*grid;k++) */
+      /* 	  Sfr[k] += (double)sfr_float[k]; */
+      /* 	fclose(sp); */
+      /* 	free(sfr_float); */
+      /* } */
       for (i=firstfile;i<=lastfile;i++) {
 	sprintf(filename, "%s%s_%d",basename,zlist_string[j],i);
 	if(i == firstfile || i == lastfile)
@@ -105,7 +131,7 @@ int main(int argc, char **argv)
 	fread(lgal,sizeof(struct LGalaxy),nGals,fp);
 	for(k=0;k<nGals;k++) {
 	  cell = (int)(lgal[k].Pos[0]/gridsize) + (int)(lgal[k].Pos[1]/gridsize)*grid + (int)(lgal[k].Pos[2]/gridsize)*grid*grid;
-	  Sfr[cell] += (double)(lgal[k].Sfr*gridmass_c);
+	  Sfr[cell] += (double)(lgal[k].Sfr*gridmass_c*dt);
 	}
 	free(lgal);
 	fclose(fp);
