@@ -63,7 +63,7 @@ int main(int argc, char **argv)
   double rho_crit_0;
   double gridmass_c; //to convert msun to gridmass
   double dt,z1,z2;
-  const double h_mass = 1.68705973e-24 // kg 
+  const double h_mass = 1.68705973e-24; // kg 
   if(argc == 6) {
     sscanf(argv[1],"%d",&selected_snap);
     sscanf(argv[2],"%s",basename);
