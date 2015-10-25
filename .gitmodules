@@ -1,3 +1,6 @@
 [submodule "L-Galaxies_development"]
 	path = L-Galaxies_development
 	url = https://boywert:aaaa1111@github.com/boywert/L-Galaxy_Boyd_dev
+[submodule "sources_generate"]
+	path = sources_generate
+	url = https://boywert:aaaa1111@github.com/boywert/Sources_generate
